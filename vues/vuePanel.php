@@ -44,6 +44,9 @@
                 $formCommentaire->afficherFormulaire();
             }
         }
+        if($_GET['menuPanel'] == "panelPoules"){
+            $formInfoVente->afficherFormulaire();
+        }
         if ($_GET['menuPanel'] == "panelDeco") {
             $_SESSION['authentification'] == null;
             header("Location: index.php?menuPrincipal=accueil");

@@ -189,8 +189,15 @@ class Formulaire{
 		return $composant;
 	}
 	
-	public function creerInputNumberV($unNom, $unId, $uneValue){
-		$composant = "<input type = 'number' name = '" . $unNom . "' id = '" . $unId . "' value = '".$uneValue."'/>";
+	public function creerInputNumberV($unNom, $unId, $uneValue, $min = null , $max = null){
+		$composant = "<input type='number' name='" . htmlspecialchars($unNom) . "' id='" . htmlspecialchars($unId) . "' value='" . htmlspecialchars($uneValue) . "'";
+		if(isset($min)){
+			$composant .= " min='" . htmlspecialchars($min) . "'";
+		}
+		if(isset($max)){
+			$composant .= " max='" . htmlspecialchars($max) . "'";
+		}
+		$composant .= "/>";
 		return $composant;
 	}
 

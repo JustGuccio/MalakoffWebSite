@@ -17,17 +17,20 @@ else
 	}
 }
 
-
+$menuPrincipalImg = new Menu("MenuPrincipalImage");
 $menuPrincipal = new Menu("MenuPrincipal");
-
+$menuPrincipalImg->ajouterComposant($menuPrincipalImg->creerItemLien("<img src='images/Logo3.png'>", "accueil"));
 $menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Accueil", "accueil"));
 $menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Nos Produits", "listeProduits"));
-$menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Notre Histoire", "accueil"));
-$menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Nous Trouver", "accueil"));
+$menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Poules", "poules"));
+$menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Actualité", "actualite"));
+$menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Le domaine", "domaine"));
+$menuPrincipal->ajouterComposant($menuPrincipal->creerItemLien("Nous Contacter", "info"));
 
 
 
 $menuPrincipal = $menuPrincipal->creerMenu("menuPrincipal",$_SESSION['menuPrincipal']);
+$menuPrincipalImg = $menuPrincipalImg->creerMenu("menuPrincipal",$_SESSION['menuPrincipal']);
 
 
 

@@ -1,4 +1,23 @@
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOMContentLoaded event triggered");
+    var inputDate = document.getElementById("inputDates");
+    
+    flatpickr(inputDate, {
+        mode: "range",
+        dateFormat: "d/m/Y",
+        minDate: "today",
+    });
 
+});
+document.addEventListener("DOMContentLoaded", function() {
+    var inputDateFinVente = document.getElementById("dateFinVente");
+    
+    flatpickr(inputDateFinVente, {
+        dateFormat: "d/m/Y",
+        minDate: "today",
+    });
+
+});
 
 if(document.getElementById("btnVoirPlus")){
     document.addEventListener("DOMContentLoaded", function() { //Fonction qui permet d'afficher la description entière 
@@ -11,9 +30,9 @@ if(document.getElementById("btnVoirPlus")){
             DescriptionCourte.classList.toggle("hidden");
     
             if (fullDescription.classList.contains("hidden")) {
-                btnVoirPlus.textContent = "Afficher la description complète";
+                btnVoirPlus.textContent = "Voir plus ⏷";
             } else {
-                btnVoirPlus.textContent = "Réduire la description";
+                btnVoirPlus.textContent = "Voir moins ⏶";
                 
             }
         });
@@ -25,39 +44,6 @@ if(document.getElementById("btnVoirPlus")){
 function submitFormCom() {
     document.getElementById('formCommentaire').submit(); // Soumettre le formulaire
 }
-
-
-/*document.getElementById('selectLieu').addEventListener('change', function() {
-    var lieuReception = this.value;
-    var dateLivraison = document.getElementById('inputDateR');
-    var currentDate = new Date();
-    var currentDay = currentDate.getDay(); // 0 pour dimanche, 1 pour lundi, ..., 6 pour samedi
-    var currentHour = currentDate.getHours();
-
-    dateLivraison.value = '';
-
-    dateLivraison.removeAttribute('min');
-    dateLivraison.removeAttribute('max');
-
-    if (lieuReception === 'Marché') {
-        dateLivraison.removeAttribute('disabled');
-    } else {
-        if ((currentDay === 0 || currentDay === 6) || (currentHour < 8 || currentHour >= 18)) { 
-            currentDate.setDate(currentDate.getDate() + (1 + (currentDay === 6 ? 1 : 0)));
-        } else if (currentDay === 1 && currentHour >= 18) { 
-            currentDate.setDate(currentDate.getDate() + (1 + 1));
-        }
-
-        dateLivraison.setAttribute('min', currentDate.toISOString().split('T')[0]);
-
-        if (currentHour < 8 || currentHour >= 18) {
-            dateLivraison.setAttribute('disabled', 'disabled');
-        } else {
-            dateLivraison.removeAttribute('disabled');
-        }
-    }
-});*/
-
 
 function InputDateFlatpickr(lieuReception) {
     var dateLivraison = document.getElementById('inputDateR');
@@ -117,9 +103,41 @@ function InputDateFlatpickr(lieuReception) {
 document.addEventListener('DOMContentLoaded', function() {
     var initialLieuReception = document.getElementById('selectLieu').value;
     InputDateFlatpickr(initialLieuReception);
+    console.log("DOMContentLoaded event triggered");
 });
 
 document.getElementById('selectLieu').addEventListener('change', function() {
     var lieuReception = this.value;
     InputDateFlatpickr(lieuReception);
 });
+
+
+
+
+
+
+
+
+
+
+
+function showPopup() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "block";
+}
+
+// Fonction pour fermer le popup
+function closePopup() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "none";
+}
+
+// Exemple de déclenchement du popup lorsqu'une commande est effectuée
+// Supposons que vous ayez une fonction pour traiter la commande, vous pouvez appeler showPopup() après cela
+function passerCommande() {
+    // Logique pour passer la commande
+    // ...
+
+    // Afficher le popup après avoir passé la commande
+    showPopup();
+}

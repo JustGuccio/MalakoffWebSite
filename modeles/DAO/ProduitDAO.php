@@ -19,6 +19,20 @@ class ProduitDAO{
 
     }
 
+    public static function getAllAfficher(){
+
+        $sql = "SELECT * FROM produit WHERE affichage = true";
+
+        $queryprepare = DBConnex::getInstance()->prepare($sql);
+
+        $queryprepare->execute();
+
+        $result = $queryprepare->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+
+    }
+
     public static function getById($id){
 
         $sql = "SELECT * FROM produit WHERE ID = :id";
@@ -72,5 +86,19 @@ class ProduitDAO{
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_BOTH);
         return $result;
+    }
+
+    public static function setTrue($id){
+        $sql = "UPDATE `produit` SET `affichage`= 1 WHERE id = :id";
+        $sql = DBConnex::getInstance()->prepare($sql);
+        $sql->bindParam("id",$id);
+        $sql->execute();
+    }
+
+    public static function setFalse($id){
+        $sql = "UPDATE `produit` SET `affichage`= 0 WHERE id = :id";
+        $sql = DBConnex::getInstance()->prepare($sql);
+        $sql->bindParam("id",$id);
+        $sql->execute();
     }
 }

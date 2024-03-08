@@ -12,7 +12,14 @@ include_once 'vues/vueMenuHaut.php' ;
 
 $monPanier = new Formulaire("post","index.php?menuPrincipal=panier","FormPanier", "FormPanier");
 
-$monPanier->ajouterComposantLigne($monPanier->creerInputSubmit("voirPanier", "voirPanier" ,"Voir Mon Panier"),1);
+if(isset($_SESSION['Panier'])){
+	$countP = count($_SESSION['Panier']);
+}
+else{
+	$countP = 0;
+}
+
+$monPanier->ajouterComposantLigne($monPanier->creerInputSubmit("voirPanier", "voirPanier" ,"Mon Panier " . $countP),1);
 $monPanier->ajouterComposantTab();
 
 $monPanier->creerFormulaire();
@@ -21,7 +28,7 @@ $monPanier->creerFormulaire();
 if(isset($_GET['listeProduits']) && $_GET['listeProduits'] != null){
 
 
-	$retour = "<a href='index.php?menuPrincipal=listeProduits'>Retour</a>";
+	$retour = "<a href='index.php?menuPrincipal=listeProduits' class='retour'>Retour</a>";
 
 
 	$idProduit = $_GET['listeProduits'];
@@ -32,7 +39,7 @@ if(isset($_GET['listeProduits']) && $_GET['listeProduits'] != null){
 
 	$btnCommander = new Formulaire("post", "index.php?listeProduits=".$idProduit."", "formCommander", "formCommandeer");
 
-	$btnCommander->ajouterComposantLigne($btnCommander->creerInputSubmit("btnCommander","btnCommander","Commander"),1);
+	$btnCommander->ajouterComposantLigne($btnCommander->creerInputSubmit("btnCommander","btnCommander","Ajouter au Panier"),1);
 	$btnCommander->ajouterComposantTab();
 
 	$btnCommander->creerFormulaire();
@@ -41,7 +48,7 @@ if(isset($_GET['listeProduits']) && $_GET['listeProduits'] != null){
 
 	$ajouterPanier = "<span id='messageAddPanier'></span>";
 
-	$descriptionCourte = substr($infoProduit[0]['Description'], 0, 255);
+	$descriptionCourte = substr($infoProduit[0]['Description'], 0, 512);
 	
 
 	if(!isset($_SESSION['Panier'])){
@@ -78,6 +85,29 @@ if(isset($_GET['listeProduits']) && $_GET['listeProduits'] != null){
 	$fromCommentaire->creerFormulaire();
 
 	if(isset($_POST['SubmitCom'])){
+		if (preg_match("/^[a-zA-ZÀ-ÿ0-9 \-]+$/", $_POST['LibelleCommentaire'])) {
+			if (preg_match("/^[<>]+$/", $_POST['LibelleCommentaire'])) {
+				$prenomClient = $_POST['LibelleCommentaire'];
+			} else {
+				echo "Libelle Commentaire invalide.";
+				die;
+			}
+		} else {
+			echo "Libelle Commentaire invalide.";
+			die;
+		}
+		if (preg_match("/^[a-zA-ZÀ-ÿ0-9 \-]+$/", $_POST['NomPrenomCom'])) {
+			if (preg_match("/^<script>+$/", $_POST['NomPrenomCom'])) {
+				echo "Nom Prenom invalide.";
+				die;
+
+			} else {
+				$prenomClient = $_POST['NomPrenomCom'];
+			}
+		} else {
+			echo "Nom Prenom invalide.";
+			die;
+		}
 		$NomPrenom = $_POST['NomPrenomCom'];
 		$Libelle = $_POST['LibelleCommentaire'];
 		$now = new DateTime();
@@ -94,8 +124,7 @@ if(isset($_GET['listeProduits']) && $_GET['listeProduits'] != null){
 
 }
 else{
-	$var = new ProduitDAO;
-	$listeProduit = $var->getAll();
+	$listeProduit = ProduitDAO::getAllAfficher();
 	
 	
 	
@@ -111,7 +140,8 @@ else{
 	
 	
 	include_once 'vues/vueListeProduits.php' ;
-}
 
+}
+include_once 'vues/vueBas.php' ;
 
 
